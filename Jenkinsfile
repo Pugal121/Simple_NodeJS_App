@@ -36,6 +36,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
+                echo "SonarQube Login Successed.."
                 withCredentials([string(credentialsId: 'Sonar-token', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv('SonarQube') {
                         sh """
