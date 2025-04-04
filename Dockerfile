@@ -1,20 +1,18 @@
 
-FROM node:18-alpine
+# Base image with Python
+FROM python:3.9-slim
 
-# Set the working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy package.json and package-lock.json first (to leverage Docker caching)
-COPY package*.json ./
+# Copy local code to container
+COPY . /app
 
 # Install dependencies
-RUN npm install --only=production
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application files
-COPY . .
+# Expose the port the app runs on
+EXPOSE 5000
 
-# Expose the application port
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+# Run the app
+CMD ["python", "app.py"]
